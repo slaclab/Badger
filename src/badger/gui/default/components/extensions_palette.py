@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QMainWindow, QPushButton, QVBoxLayout, \
     QWidget, QLabel, QMessageBox, QSizePolicy
 from PyQt5.QtCore import Qt
 from badger.gui.default.components.analysis_extensions import AnalysisExtension, \
-    ParetoFrontViewer
+    ParetoFrontViewer, XoptVisualizer
 
 
 class ExtensionsPalette(QMainWindow):
@@ -68,14 +68,17 @@ class ExtensionsPalette(QMainWindow):
         self.text_box.setAlignment(Qt.AlignCenter)
 
         self.btn_data_viewer = QPushButton('ParetoFrontViewer')
+        self.btn_xopt_visualizer = QPushButton('XoptVisualizer')
 
         layout.addWidget(self.btn_data_viewer)
+        layout.addWidget(self.btn_xopt_visualizer)
         layout.addStretch()
         layout.addWidget(self.text_box)
 
         central_widget.setLayout(layout)
 
         self.btn_data_viewer.clicked.connect(self.add_pf_viewer)
+        self.btn_xopt_visualizer.clicked.connect(self.add_xopt_visualizer)
 
     @property
     def n_active_extensions(self):
@@ -100,6 +103,13 @@ class ExtensionsPalette(QMainWindow):
 
         """
         self.add_child_window_to_monitor(ParetoFrontViewer(self))
+
+    def add_xopt_visualizer(self):
+        """
+        Open the XoptVisualizer extension.
+
+        """
+        self.add_child_window_to_monitor(XoptVisualizer(self))
 
     def add_child_window_to_monitor(self, child_window: AnalysisExtension):
         """

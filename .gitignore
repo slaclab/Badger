@@ -10,3 +10,4 @@ __pycache__
 *.pickle
 *.db
 .vscode
+.venv

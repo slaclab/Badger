@@ -54,3 +54,38 @@ class ParetoFrontViewer(AnalysisExtension):
         # set labels
         self.plot_widget.setLabel("left", y_name)
         self.plot_widget.setLabel("bottom", x_name)
+
+# Class for Xopt, pass in AnalysisExtension
+
+class XoptVisualizer(AnalysisExtension):
+    def __init__(self, parent=None):
+        super().__init__(parent=parent)
+
+        self.setWindowTitle("Xopt Visualizer")
+
+        self.plot_widget = pg.PlotWidget()
+
+        self.scatter_plot = self.plot_widget.plot(pen=None, symbol='o', symbolSize=10)
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.plot_widget)
+        self.setLayout(layout)
+
+    def update_window(self, routine: Routine):
+        if len(routine.vocs.objective_names) != 2:
+            raise ValueError("cannot use xopt front viewer unless there are 2 "
+                             "objectives")
+
+        x_name = routine.vocs.objective_names[0]
+        y_name = routine.vocs.objective_names[1]
+
+        if routine.data is not None:
+            x = routine.data[x_name]
+            y = routine.data[y_name]
+
+            # Update the scatter plot
+            self.scatter_plot.setData(x=x, y=y)
+
+        # set labels
+        self.plot_widget.setLabel("left", y_name)
+        self.plot_widget.setLabel("bottom", x_name)
