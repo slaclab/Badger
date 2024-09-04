@@ -107,9 +107,9 @@ class ExtensionsPalette(QMainWindow):
     def add_xopt_visualizer(self):
         """
         Open the XoptVisualizer extension.
-
         """
-        self.add_child_window_to_monitor(XoptVisualizer(self))
+        xopt_visualizer = XoptVisualizer(self)
+        xopt_visualizer.show()
 
     def add_child_window_to_monitor(self, child_window: AnalysisExtension):
         """
